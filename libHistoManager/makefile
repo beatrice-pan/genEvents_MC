@@ -1,0 +1,60 @@
+##############################################################################
+#----------------------------------------------------------------------
+#  Execute from command line:
+#	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD}
+#	export LD_LIBRARY_PATH
+#  in order to add "./" to load library path
+#----------------------------------------------------------------------
+.SUFFIXES:  .o .c .cxx .f .l  .s  .sh  .h  .a
+#======================================================================
+RPATH = $(ROOTSYS)
+#  Root  libraries for linker
+RLIB=   -L$(RPATH)/lib -lCore -lCint -lHist -lGraf -lGraf3d -lGpad -lTree -lRint \
+	-lPostscript -lMatrix -lPhysics -lm -ldl -lpthread -rdynamic
+#  Fortran libraries for linker (just in case)
+FLIB=   -lf2c
+#======================================================================
+#####  c++ compiler
+CXX         =  g++
+#CXX         =  insure
+#CXX         =  codewizard
+CLD         =  $(CXX)
+#CXXFLAGS    = -g -ansi -pedantic
+#CXXFLAGS    = -O -Wall -fPIC -D_REENTRANT -I/home/jadach/root/include
+CXXFLAGS    = -g -O  -ansi -Wall -fPIC -D_REENTRANT -I$(RPATH)/include 
+#CXXFLAGS    =  -g
+#======================================================================
+#####  f77 compiler
+# forbid underscore completely       -fno-second-underscore
+# forbid double underscore only      -fno-underscoring
+FFLAGS  =  -O -fno-second-underscore -fno-automatic -ffixed-line-length-132 -fbackslash 
+F77 = g77
+#  Fortran libraries for linker
+FLIB=   -lf2c
+CLF =  $(F77)
+#--------------------------------------------------------------------
+.cxx.o:
+	$(CXX) $(CXXFLAGS) -c $<
+.f.o:
+	$(F77) $(FFLAGS) -c $<
+#====================================================================
+all: lib
+#==============================================================================
+# Local shared library for all programs
+SLIB1 = LibHistoManager
+$(SLIB1)_HED=	HistoManager.h
+$(SLIB1)_OBJ=	HistoManager.o	
+
+$(SLIB1)Dict.cxx: $($(SLIB1)_HED) $(SLIB1)LinkDef.h
+	@echo "Generating dictionary $@..."
+	@rootcint -f $@ -c $^
+lib$(SLIB1).so:         $(SLIB1)Dict.cxx   $($(SLIB1)_OBJ) $(SLIB1)Dict.o
+	g++ -shared -o lib$(SLIB1).so -O  $($(SLIB1)_OBJ) $(SLIB1)Dict.o
+lib$(SLIB1).a:         $(SLIB1)Dict.cxx   $($(SLIB1)_OBJ) $(SLIB1)Dict.o
+	ar cr lib$(SLIB1).a   $($(SLIB1)_OBJ) $(SLIB1)Dict.o
+lib: lib$(SLIB1).so lib$(SLIB1).a 
+
+#====================================================================
+##############################################################################
+clean:
+	rm -rf lib$(SLIB1).so lib$(SLIB1).a $($(SLIB1)_OBJ) $(SLIB1)Dict.*

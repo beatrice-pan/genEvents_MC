@@ -1,0 +1,36 @@
+#ifdef __CINT__
+
+#pragma link off all globals;
+#pragma link off all classes;
+#pragma link off all functions;
+
+#pragma link C++ class vector<float>+;
+
+#pragma link C++ class AnalTauSpinnerWeight+;
+#pragma link C++ class AnalTauSpinnerCP+;
+#pragma link C++ class AnalHepMCEvent+;
+#pragma link C++ class AnalTauSpinnerVBFWeight+;
+#pragma link C++ class AnalTauSpinnerHJWeight+;
+#pragma link C++ class AnalAngularAis+;
+#pragma link C++ class AnalBiasInAis+;
+#pragma link C++ class AnalNTUPBiasInAis+;
+#pragma link C++ class AnalLHEBiasInAis+;
+#pragma link C++ class AnalNTUPZpolAis+;
+#pragma link C++ class AnalNTUPZpolAisEWPO+;
+#pragma link C++ class AnalTauSpinnerSpin2Weight+;
+
+#pragma link C++ global AnalHepMCEvent*          AnalHepMCEvent::gAnalHepMCEvent;
+#pragma link C++ global AnalTauSpinnerVBFWeight* AnalTauSpinnerVBFWeight::gAnalTauSpinnerVBFWeight;
+#pragma link C++ global AnalTauSpinnerHJWeight*  AnalTauSpinnerHJWeight::gAnalTauSpinnerHJWeight;
+#pragma link C++ global AnalTauSpinnerWeight*    AnalTauSpinnerWeight::gAnalTauSpinnerWeight;
+#pragma link C++ global AnalTauSpinnerCP*        AnalTauSpinnerCP::gAnalTauSpinnerCP;
+#pragma link C++ global AnalAngularAis*          AnalAngularAis::gAnalAngularAis;
+#pragma link C++ global AnalBiasInAis*           AnalBiasInAis::gAnalBiasInAis;
+#pragma link C++ global AnalNTUPBiasInAis*       AnalNTUPBiasInAis::gAnalNTUPBiasInAis;
+#pragma link C++ global AnalLHEBiasInAis*        AnalLHEBiasInAis::gAnalLHEBiasInAis;
+#pragma link C++ global AnalNTUPZpolAis*         AnalNTUPZpolAis::gAnalNTUPZpolAis;
+#pragma link C++ global AnalNTUPZpolAisEWPO*         AnalNTUPZpolAis::gAnalNTUPZpolAisEWPO;
+#pragma link C++ global AnalTauSpinnerSpin2Weight* AnalTauSpinnerSpin2Weight::gAnalTauSpinnerSpin2Weight;
+
+
+#endif
